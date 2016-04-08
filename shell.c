@@ -152,7 +152,7 @@ void doDir(){
 		
 		// Print name
 		interrupt(0x21, 0, fName1, 0, 0);
-		interrupt(0x21, 0, " :: Size = ", 0, 0);
+		interrupt(0x21, 0, " :: Size = \0", 0, 0);
 
 		// Calculate filesize in sectors
 		fileSize = 0; iShell=6;
@@ -186,7 +186,7 @@ void doCopy(char* CMD){
 	while( iShelltmp<7 ) { *(fName1+iShelltmp) = 0x00; iShelltmp++; }
 
 	if( *(CMD+5+iShell)!=' ' ) 
-		{ interrupt(0x21, 0, "COPY-ERROR 0xA5: Wrong CMD format, It should be \"copy fName1 fName2\".\0", 0, 0); return; }
+		{ interrupt(0x21, 0, "COPY-ERROR 0xA5: Wrong CMD format, It should be \"copy fName1 fName2\". \0", 0, 0); return; }
 
 	// [fileName2] parsing
 	iShell++;
@@ -195,7 +195,7 @@ void doCopy(char* CMD){
 		{ *(fName2+iShelltmp) = *(CMD+5+iShell+iShelltmp); iShelltmp++; }
 	
 	if( iShelltmp==0 ) { 
-		interrupt(0x21, 0, "COPY-ERROR 0xA5: Wrong CMD format, It should be \"copy fName1 fName2\".\0", 0, 0); return;
+		interrupt(0x21, 0, "COPY-ERROR 0xA5: Wrong CMD format, It should be \"copy fName1 fName2\". \0", 0, 0); return;
 	}
 
 	while( iShelltmp<7 ) { *(fName2+iShelltmp) = 0x00; iShelltmp++; }
@@ -213,7 +213,7 @@ void doCopy(char* CMD){
 	}
 
 	if( iShell==0 ) {
-		interrupt(0x21, 0, "COPY-ERROR 0xA5: The file you want to copy does not exist.", 0, 0); return;
+		interrupt(0x21, 0, "COPY-ERROR 0xA5: The file you want to copy does not exist. \0", 0, 0); return;
 	}
 
 	// Write [fileName2] using Interrupt 8

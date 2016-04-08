@@ -312,7 +312,7 @@ void executeProgram(char* name, int segment){
 	ptr = 0;
 
 	readFile(name, progBuffer);
-	if( *progBuffer==0x0 ) { interrupt(0x21, 0, "EXECUTE-ERROR 0xA2: program not found.\0", 0, 0); return; }
+	if( *progBuffer==0x0 ) { return; }
 
 	while( ptr<13312 ) putInMemory(segment, ptr++, *(progBuffer+ptr));
 	
