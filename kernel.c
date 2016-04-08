@@ -69,7 +69,7 @@ void readString(char* text){
 			if( ptr != text ){ 
 				interrupt(0x10, 0xE*256+c, 0, 0, 0);
 				interrupt(0x10, 0xE*256+0x20, 0, 0, 0);
-				interrupt(0x10,0xE*256+0x8,0,0,0);
+				interrupt(0x10, 0xE*256+0x8, 0, 0, 0);
 				ptr--;
 				size++;
 			}
