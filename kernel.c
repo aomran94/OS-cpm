@@ -20,12 +20,13 @@ void terminate();
 
 void handleInterrupt21(int, int, int, int);
 
+/*
+ * Main KERNEL program;
+ */
+
 main(){
 	
-	char A[13312];
 	makeInterrupt21();
-	
-	
 	interrupt(0x21, 4, "shell\0", 0x2000, 0); // Run the shell
 	
 	while(1);
@@ -128,8 +129,6 @@ void readFile(char* fileName, char* buffer){
 	char dirBuffer[512];
 
 	readSector(dirBuffer, 2);
-
-	//interrupt(0x21, 0, fileName, 0, 0);
 	
 	iDir=0;
 
@@ -253,6 +252,13 @@ void deleteFile(char* name){
 
 	iDir=0;
 
+
+	if(*name=='s' && *(name+1)=='h' && *(name+2)=='e' && *(name+3)=='l' && *(name+4)=='l' && *(name+5)=='\0')
+			return;
+
+	if(*name=='K' && *(name+1)=='E' && *(name+2)=='R' && *(name+3)=='N' && *(name+4)=='E' && *(name+5)=='L' && *(name+6)=='\0')
+			return;
+
 	readSector(mapSector, 1);
 	readSector(dirSector, 2);
 
@@ -282,7 +288,7 @@ void deleteFile(char* name){
 		*(dirSector+iDir) = 0x0;
 
 		for(i=0; i<26; i++){
-			if( *(dirSector+iDir+6+i) != 0x00 ) { *( mapSector + *(dirSector+iDir+6+i) ) = 0x00; }
+			if( *(dirSector+iDir+6+i) != 0x00 ) { *( mapSector + *(dirSector+iDir+6+i) ) = 0x00; *(dirSector+iDir+6+i) = 0x0; }
 			else break;
 		}
 		
